@@ -1,6 +1,5 @@
-=========================================
-DJANGO E-COMMERCE PROJECT - REPO STRUCTURE
-=========================================
+
+DJANGO E-COMMERCE PROJECT
 
 📦 Project: django-ecommerce
 🧩 Framework: Django 4.2.7
@@ -53,8 +52,7 @@ Includes:
 │   ├── views.py  
 │   ├── urls.py  
 │   └── templates/core/  
-│       ├── product_list.html  
-│       ├── product_detail.html  
+│       ├── product_list.html   
 │       ├── search.html  
 │       └── filter.html  
 │
@@ -66,7 +64,7 @@ Includes:
 └── + all files from Phase 1
 
 Test Scope:
-✅ Product list + detail page  
+✅ Product list   
 ✅ Search & filter logic  
 
 -----------------------------------------
@@ -79,15 +77,15 @@ Includes:
 │   ├── views.py  
 │   ├── urls.py  
 │   └── templates/cart/  
-│       ├── cart.html  
-│       ├── checkout.html  
+│       ├── product-details.html  
+│       ├── vendors-details.html  
 │
 └── + all files from Phase 1 & 2  
 
 Test Scope:
-✅ Add to cart / remove from cart  
-✅ View cart summary  
-✅ Checkout page  
+✅ View product details
+✅ View vendors details
+ 
 
 -----------------------------------------
 🔹 PHASE 4 - Admin Dashboard & Management, Add to cart
@@ -105,25 +103,94 @@ Includes:
 └── + all files from Phase 1, 2, 3  
   
 Test Scope:
+✅ Add to cart / remove from cart  
+✅ View cart summary  
+✅ Checkout page  
 ✅ Admin login  
 ✅ Manage users/products/orders  
 ✅ Dashboard analytics  
 
+
+## Features📚
+
+- User Authentication
+- User Profile
+- Shopping Cart
+- Wishlist
+- Product Discount
+- Products / Vendors Page
+- Product detail / Vendor detail Page
+- Tags for Product and Blog
+- Category list Page
+- Improved Admin Panel
+- Product Reviews
+- Blog post Comments
+- Products Filter
+- Search Functionality
+- Related Products
+- Related Blog posts
+
 -----------------------------------------
-🧰 ENVIRONMENT SETUP
+🧰 Installation Guide
 -----------------------------------------
-1️⃣ Create venv:
-    python -m venv venv
-    venv\Scripts\activate
 
-2️⃣ Install dependencies:
-    pip install -r requirements.txt
 
-3️⃣ Apply migrations:
-    python manage.py migrate
+1. Clone and change to the directory:
 
-4️⃣ Run server:
-    python manage.py runserver
+```
+git clone https://github.com/kolosochok/django-ecommerce
+cd django-ecommerce
+```
+
+2. Create and activate a virtual environment:
+
+Unix based systems:
+```
+virtualenv env
+source env/bin/activate
+```
+
+Windows:
+```
+python -m venv env
+source env/Scripts/activate
+```
+
+3. Install Python requirements:
+
+```
+pip install -r requirements.txt
+```
+
+4. Create a SECRET_KEY and copy:
+
+```
+python secret_key.py
+```
+
+5. Create a `.env` file and add a SECRET_KEY value to `.env`:
+
+```
+SECRET_KEY=generated-secret-key
+```
+
+6. Migrate DB:
+
+```
+python manage.py migrate
+```
+
+7. To create superuser:
+
+```
+python manage.py createsuperuser
+```
+
+8. Run application:
+
+```
+python manage.py
+```
 
 -----------------------------------------
 🧱 GIT MANAGEMENT GUIDE
