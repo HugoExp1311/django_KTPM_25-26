@@ -1,103 +1,148 @@
-# Django Full Stack E-Commerce Application
+=========================================
+DJANGO E-COMMERCE PROJECT - REPO STRUCTURE
+=========================================
 
-This project is a comprehensive solution for building and managing a robust e-commerce platform using Python, Django, JavaScript, jQuery, and SQLite.
+📦 Project: django-ecommerce
+🧩 Framework: Django 4.2.7
+🐍 Python: 3.9+
+💾 Database: SQLite (default)
 
-## Demo💫
+-----------------------------------------
+PHASE DIVISION (for Unit Testing)
+-----------------------------------------
 
-🌐👉https://valleys.pythonanywhere.com
+🔹 PHASE 1 - Basic Authentication & Homepage
+-----------------------------------------
+Includes:
+│
+├── userauths/
+│   ├── views.py
+│   ├── urls.py
+│   ├── models.py
+│   ├── forms.py
+│   └── templates/userauths/
+│       ├── login.html
+│       ├── register.html
+│       └── profile.html
+│
+├── templates/
+│   ├── base.html
+│   └── index.html     ← Homepage
+│
+├── ecomproject/
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+│
+├── manage.py
+├── requirements.txt
+└── db.sqlite3 (auto-generated after migrate)
 
-**Homepage**
-![изображение](https://github.com/kolosochok/django-ecommerce/assets/148413963/a090bc2a-eaa8-47ca-97be-5560d857df6e)
+Test Scope:
+✅ Login / Register pages  
+✅ Homepage loading  
+✅ Base layout rendering  
 
-**Admin Panel**
-![изображение](https://github.com/kolosochok/django-ecommerce/assets/148413963/505d1126-a2ed-4dec-b6b0-eb68be823a3d)
+-----------------------------------------
+🔹 PHASE 2 - Product Display & Search
+-----------------------------------------
+Includes:
+│
+├── core/
+│   ├── models.py
+│   ├── views.py
+│   ├── urls.py
+│   └── templates/core/
+│       ├── product_list.html
+│       ├── product_detail.html
+│       ├── search.html
+│       └── filter.html
+│
+├── static/
+│   ├── css/
+│   ├── js/
+│   └── images/
+│
+└── + all files from Phase 1
 
-## Overview⚡️
+Test Scope:
+✅ Product list + detail page  
+✅ Search & filter logic  
 
-This project aims to provide a solid foundation to create a feature-rich and scalable e-commerce website. Leveraging the power of Django, a high-level web framework written in Python, and integrating dynamic front-end interactions with JavaScript and jQuery, our application delivers a seamless and responsive user experience.
+-----------------------------------------
+🔹 PHASE 3 - Cart & Checkout
+-----------------------------------------
+Includes:
+│
+├── cart/
+│   ├── models.py
+│   ├── views.py
+│   ├── urls.py
+│   └── templates/cart/
+│       ├── cart.html
+│       ├── checkout.html
+│
+└── + all files from Phase 1 & 2
 
-## Tech Stack🚀
+Test Scope:
+✅ Add to cart / remove from cart  
+✅ View cart summary  
+✅ Checkout page  
 
-- Backend: Python, Django
-- Frontend: JavaScript, jQuery
-- Database: SQLite
+-----------------------------------------
+🔹 PHASE 4 - Admin Dashboard & Management
+-----------------------------------------
+Includes:
+│
+├── dashboard/
+│   ├── views.py
+│   ├── urls.py
+│   └── templates/dashboard/
+│       ├── admin_home.html
+│       ├── manage_users.html
+│       └── manage_products.html
+│
+└── + all files from Phase 1, 2, 3
 
-## Features📚
+Test Scope:
+✅ Admin login  
+✅ Manage users/products/orders  
+✅ Dashboard analytics  
 
-- User Authentication
-- User Profile
-- Shopping Cart
-- Wishlist
-- Product Discount
-- Products / Vendors Page
-- Product detail / Vendor detail Page
-- Tags for Product and Blog
-- Category list Page
-- Improved Admin Panel
-- Product Reviews
-- Blog post Comments
-- Products Filter
-- Search Functionality
-- Related Products
-- Related Blog posts
+-----------------------------------------
+🧰 ENVIRONMENT SETUP
+-----------------------------------------
+1️⃣ Create venv:
+    python -m venv venv
+    venv\Scripts\activate
 
-## Installation Guide📚
+2️⃣ Install dependencies:
+    pip install -r requirements.txt
 
-1. Clone and change to the directory:
+3️⃣ Apply migrations:
+    python manage.py migrate
 
-```
-git clone https://github.com/kolosochok/django-ecommerce
-cd django-ecommerce
-```
+4️⃣ Run server:
+    python manage.py runserver
 
-2. Create and activate a virtual environment:
+-----------------------------------------
+🧱 GIT MANAGEMENT GUIDE
+-----------------------------------------
+Branch naming convention:
+- phase1-login-home
+- phase2-product-search
+- phase3-cart-checkout
+- phase4-admin-dashboard
 
-Unix based systems:
-```
-virtualenv env
-source env/bin/activate
-```
+Each branch only contains its respective features + previous phase.
 
-Windows:
-```
-python -m venv env
-source env/Scripts/activate
-```
-
-3. Install Python requirements:
-
-```
-pip install -r requirements.txt
-```
-
-4. Create a SECRET_KEY and copy:
-
-```
-python secret_key.py
-```
-
-5. Create a `.env` file and add a SECRET_KEY value to `.env`:
-
-```
-SECRET_KEY=generated-secret-key
-```
-
-6. Migrate DB:
-
-```
-python manage.py migrate
-```
-
-7. To create superuser:
-
-```
-python manage.py createsuperuser
-```
-
-8. Run application:
-
-```
-python manage.py
-```
-
-*happy coding*
+-----------------------------------------
+📄 .gitignore RECOMMENDED
+-----------------------------------------
+venv/
+__pycache__/
+*.pyc
+db.sqlite3
+.env
+/static/
+media/
