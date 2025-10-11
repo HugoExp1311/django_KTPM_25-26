@@ -15,28 +15,28 @@ PHASE DIVISION (for Unit Testing)
 -----------------------------------------
 Includes:
 │
-├── userauths/
-│   ├── views.py
-│   ├── urls.py
-│   ├── models.py
-│   ├── forms.py
-│   └── templates/userauths/
-│       ├── login.html
-│       ├── register.html
-│       └── profile.html
+├── userauths/  
+│   ├── views.py  
+│   ├── urls.py  
+│   ├── models.py  
+│   ├── forms.py  
+│   └── templates/userauths/  
+│       ├── login.html  
+│       ├── register.html  
+│       └── profile.html  
 │
-├── templates/
-│   ├── base.html
-│   └── index.html     ← Homepage
+├── templates/  
+│   ├── base.html  
+│   └── index.html     ← Homepage  
 │
-├── ecomproject/
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
+├── ecomproject/  
+│   ├── settings.py  
+│   ├── urls.py   
+│   └── wsgi.py  
 │
-├── manage.py
-├── requirements.txt
-└── db.sqlite3 (auto-generated after migrate)
+├── manage.py  
+├── requirements.txt  
+└── db.sqlite3 (auto-generated after migrate)  
 
 Test Scope:
 ✅ Login / Register pages  
@@ -48,20 +48,20 @@ Test Scope:
 -----------------------------------------
 Includes:
 │
-├── core/
-│   ├── models.py
-│   ├── views.py
-│   ├── urls.py
-│   └── templates/core/
-│       ├── product_list.html
-│       ├── product_detail.html
-│       ├── search.html
-│       └── filter.html
+├── core/  
+│   ├── models.py  
+│   ├── views.py  
+│   ├── urls.py  
+│   └── templates/core/  
+│       ├── product_list.html  
+│       ├── product_detail.html  
+│       ├── search.html  
+│       └── filter.html  
 │
-├── static/
-│   ├── css/
-│   ├── js/
-│   └── images/
+├── static/  
+│   ├── css/  
+│   ├── js/  
+│   └── images/  
 │
 └── + all files from Phase 1
 
@@ -74,15 +74,15 @@ Test Scope:
 -----------------------------------------
 Includes:
 │
-├── cart/
-│   ├── models.py
-│   ├── views.py
-│   ├── urls.py
-│   └── templates/cart/
-│       ├── cart.html
-│       ├── checkout.html
+├── cart/  
+│   ├── models.py  
+│   ├── views.py  
+│   ├── urls.py  
+│   └── templates/cart/  
+│       ├── cart.html  
+│       ├── checkout.html  
 │
-└── + all files from Phase 1 & 2
+└── + all files from Phase 1 & 2  
 
 Test Scope:
 ✅ Add to cart / remove from cart  
