@@ -13,8 +13,8 @@ PHASE DIVISION (for Unit Testing)
 
 🔹 PHASE 1 - Basic Authentication & Homepage
 -----------------------------------------
-Includes:
-│
+Includes:  
+│  
 ├── userauths/  
 │   ├── views.py  
 │   ├── urls.py  
@@ -46,8 +46,8 @@ Test Scope:
 -----------------------------------------
 🔹 PHASE 2 - Product Display & Search
 -----------------------------------------
-Includes:
-│
+Includes:  
+│  
 ├── core/  
 │   ├── models.py  
 │   ├── views.py  
@@ -72,8 +72,8 @@ Test Scope:
 -----------------------------------------
 🔹 PHASE 3 - Cart & Checkout
 -----------------------------------------
-Includes:
-│
+Includes:  
+│  
 ├── cart/  
 │   ├── models.py  
 │   ├── views.py  
@@ -92,18 +92,18 @@ Test Scope:
 -----------------------------------------
 🔹 PHASE 4 - Admin Dashboard & Management
 -----------------------------------------
-Includes:
-│
-├── dashboard/
-│   ├── views.py
-│   ├── urls.py
-│   └── templates/dashboard/
-│       ├── admin_home.html
-│       ├── manage_users.html
-│       └── manage_products.html
-│
-└── + all files from Phase 1, 2, 3
-
+Includes:  
+│  
+├── dashboard/  
+│   ├── views.py  
+│   ├── urls.py  
+│   └── templates/dashboard/  
+│       ├── admin_home.html  
+│       ├── manage_users.html  
+│       └── manage_products.html  
+│  
+└── + all files from Phase 1, 2, 3  
+  
 Test Scope:
 ✅ Admin login  
 ✅ Manage users/products/orders  
