@@ -70,7 +70,7 @@ Test Scope:
 ✅ Search & filter logic  
 
 -----------------------------------------
-🔹 PHASE 3 - Cart & Checkout
+🔹 PHASE 3 - Product Details
 -----------------------------------------
 Includes:  
 │  
@@ -90,7 +90,7 @@ Test Scope:
 ✅ Checkout page  
 
 -----------------------------------------
-🔹 PHASE 4 - Admin Dashboard & Management
+🔹 PHASE 4 - Admin Dashboard & Management, Add to cart
 -----------------------------------------
 Includes:  
 │  
