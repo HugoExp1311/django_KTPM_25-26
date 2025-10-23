@@ -1,0 +1,460 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %}Thanh toán - TechShop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="checkout-header">
+        <h1>Thanh toán đơn hàng</h1>
+        <div class="checkout-steps">
+            <div class="step completed">
+                <div class="step-number">1</div>
+                <span>Giỏ hàng</span>
+            </div>
+            <div class="step completed">
+                <div class="step-number">2</div>
+                <span>Thông tin giao hàng</span>
+            </div>
+            <div class="step active">
+                <div class="step-number">3</div>
+                <span>Thanh toán</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="checkout-content">
+        <!-- Tóm tắt đơn hàng -->
+        <div class="order-summary">
+            <h2>Đơn hàng của bạn</h2>
+            <div class="order-items">
+                {% for item in cart_items %}
+                <div class="order-item">
+                    <div class="item-info">
+                        <div class="item-image">
+                            {% if item.product.image %}
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="width: 60px; height: 60px; object-fit: cover;">
+                            {% else %}
+                                <div style="width: 60px; height: 60px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; color: #666;">
+                                    No Image
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="item-details">
+                            <h4>{{ item.product.name }}</h4>
+                            <span>Số lượng: {{ item.quantity }}</span>
+                        </div>
+                    </div>
+                    <div class="item-price">{{ item.total_price|floatformat:0 }}₫</div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="order-totals">
+                <div class="total-row">
+                    <span>Tạm tính:</span>
+                    <span>{{ cart_total|floatformat:0 }}₫</span>
+                </div>
+                <div class="total-row">
+                    <span>Phí vận chuyển:</span>
+                    <span>30.000₫</span>
+                </div>
+                <div class="total-row final">
+                    <span>Tổng cộng:</span>
+                    <span>{{ total_with_shipping|floatformat:0 }}₫</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phần thanh toán -->
+        <div class="payment-section" id="paymentSection">
+            <h2>Phương thức thanh toán</h2>
+            
+            <form method="POST" action="{% url 'process_payment' %}" id="paymentForm">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label>Chọn phương thức thanh toán</label>
+                    <div class="payment-methods">
+                        <div class="payment-method" onclick="selectPaymentMethod('cod')">
+                            <i>💵</i>
+                            <div>Thanh toán khi nhận hàng</div>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod('card')">
+                            <i>💳</i>
+                            <div>Thẻ Visa/MasterCard</div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="payment_method" id="paymentMethod" value="cod">
+                </div>
+
+                <div class="card-details" id="cardDetails">
+                    <div class="form-group">
+                        <label for="cardNumber">Số thẻ</label>
+                        <input type="text" id="cardNumber" name="card_number" placeholder="1234 5678 9012 3456" maxlength="19">
+                    </div>
+                    
+                    <div class="card-row">
+                        <div class="form-group">
+                            <label for="expiryDate">Ngày hết hạn</label>
+                            <input type="text" id="expiryDate" name="expiry_date" placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" name="cvv" placeholder="123" maxlength="3">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cardHolder">Tên chủ thẻ</label>
+                        <input type="text" id="cardHolder" name="card_holder" placeholder="NGUYEN VAN A">
+                    </div>
+                </div>
+
+                <button type="submit" class="complete-order-btn">
+                    Hoàn tất đơn hàng
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+/* CSS giữ nguyên từ phiên bản trước */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.checkout-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.checkout-header h1 {
+    color: #2c3e50;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.checkout-steps {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    margin: 0 15px;
+}
+
+.step-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ddd;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.step.active .step-number {
+    background-color: #3498db;
+    color: white;
+}
+
+.step.completed .step-number {
+    background-color: #27ae60;
+    color: white;
+}
+
+.checkout-content {
+    display: flex;
+    gap: 30px;
+}
+
+.order-summary {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.order-summary h2 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.order-items {
+    margin-bottom: 20px;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.item-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.item-image {
+    width: 60px;
+    height: 60px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.item-details h4 {
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+.item-price {
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+.order-totals {
+    border-top: 2px solid #eee;
+    padding-top: 15px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.total-row.final {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2c3e50;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.payment-section {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.payment-section h2 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.payment-methods {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.payment-method {
+    flex: 1;
+    text-align: center;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.payment-method:hover {
+    border-color: #3498db;
+}
+
+.payment-method.selected {
+    border-color: #3498db;
+    background-color: #f8f9fa;
+}
+
+.payment-method i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.payment-method.selected i {
+    color: #3498db;
+}
+
+.card-details {
+    display: none;
+}
+
+.card-details.active {
+    display: block;
+}
+
+.card-row {
+    display: flex;
+    gap: 15px;
+}
+
+.card-row .form-group {
+    flex: 1;
+}
+
+.complete-order-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.complete-order-btn:hover {
+    background-color: #219a52;
+}
+
+@media (max-width: 768px) {
+    .checkout-content {
+        flex-direction: column;
+    }
+    
+    .card-row {
+        flex-direction: column;
+    }
+}
+</style>
+
+<script>
+let selectedPaymentMethod = 'cod';
+
+function selectPaymentMethod(method) {
+    selectedPaymentMethod = method;
+    
+    // Update UI
+    document.querySelectorAll('.payment-method').forEach(el => {
+        el.classList.remove('selected');
+    });
+    event.currentTarget.classList.add('selected');
+    
+    // Update hidden input
+    document.getElementById('paymentMethod').value = method;
+    
+    // Show/hide card details
+    const cardDetails = document.getElementById('cardDetails');
+    if (method === 'card') {
+        cardDetails.classList.add('active');
+    } else {
+        cardDetails.classList.remove('active');
+    }
+}
+
+function formatCardNumber(input) {
+    let value = input.value.replace(/\D/g, '');
+    value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+    input.value = value;
+}
+
+function formatExpiryDate(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length >= 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+    }
+    input.value = value;
+}
+
+// Form validation
+document.getElementById('paymentForm').addEventListener('submit', function(e) {
+    if (selectedPaymentMethod === 'card') {
+        const cardNumber = document.getElementById('cardNumber').value;
+        const expiryDate = document.getElementById('expiryDate').value;
+        const cvv = document.getElementById('cvv').value;
+        const cardHolder = document.getElementById('cardHolder').value;
+        
+        if (!cardNumber || !expiryDate || !cvv || !cardHolder) {
+            e.preventDefault();
+            alert('Vui lòng điền đầy đủ thông tin thẻ thanh toán');
+            return;
+        }
+        
+        if (cardNumber.replace(/\s/g, '').length !== 16) {
+            e.preventDefault();
+            alert('Số thẻ phải có 16 chữ số');
+            return;
+        }
+    }
+});
+
+// Add event listeners for formatting
+document.getElementById('cardNumber').addEventListener('input', function() {
+    formatCardNumber(this);
+});
+
+document.getElementById('expiryDate').addEventListener('input', function() {
+    formatExpiryDate(this);
+});
+
+// Select COD by default
+document.querySelector('.payment-method').classList.add('selected');
+</script>
+{% endblock %}

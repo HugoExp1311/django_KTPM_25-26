@@ -345,3 +345,39 @@ def ajax_contact_form(request):
 
 def about(request):
 	return render(request, 'core/about.html')
+ # Add new payment function
+def checkout(request):
+    cart_total_amount = 0
+    cart_items = []
+    
+    if 'cart_data_object' in request.session:
+        # Chuyển đổi dữ liệu session thành danh sách sản phẩm
+        for product_id, item in request.session['cart_data_object'].items():
+            try:
+                product = Product.objects.get(id=product_id)
+                quantity = int(item['qty'])
+                price = float(item['price'])
+                total_price = quantity * price
+                
+                cart_items.append({
+                    'product': product,
+                    'quantity': quantity,
+                    'total_price': total_price,
+                    'title': item['title'],
+                    'image': item['image']
+                })
+                cart_total_amount += total_price
+            except Product.DoesNotExist:
+                continue
+    
+    shipping_fee = 30000  # Phí vận chuyển
+    total_with_shipping = cart_total_amount + shipping_fee
+    
+    context = {
+        'cart_items': cart_items,
+        'cart_total': cart_total_amount,
+        'total_with_shipping': total_with_shipping,
+        'shipping_fee': shipping_fee,
+        'cart_data': request.session.get('cart_data_object', {})
+    }
+    return render(request, 'core/checkout.html', context)
