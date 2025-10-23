@@ -69,8 +69,8 @@
         <div class="payment-section" id="paymentSection">
             <h2>Phương thức thanh toán</h2>
             
-            <form method="POST" action="{% url 'process_payment' %}" id="paymentForm">
-                {% csrf_token %}
+<form method="POST" id="paymentForm">
+                    {% csrf_token %}
                 
                 <div class="form-group">
                     <label>Chọn phương thức thanh toán</label>
@@ -110,7 +110,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="complete-order-btn">
+                <button type="button" class="complete-order-btn" onclick="completeOrder()">
                     Hoàn tất đơn hàng
                 </button>
             </form>
