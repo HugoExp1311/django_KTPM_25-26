@@ -161,6 +161,11 @@ source env/Scripts/activate
 ```
 pip install -r requirements.txt
 ```
+/*Note*/: If missing easyaudit, then install it using
+
+```
+pip install django-easy-audit 
+```
 
 4. Create a SECRET_KEY and copy:
 
