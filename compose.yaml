@@ -11,8 +11,8 @@ services:
       - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
     volumes:
       - .:/app
-      - sqlite_data:/app/db  # Sửa đường dẫn
-    user: "1000:1000"  # DI CHUYỂN vào đúng vị trí
+      - ./db.sqlite3:/app/db.sqlite3   # ✅ mount file db từ host vào container
+    user: "1000:1000"
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
 
 volumes:
