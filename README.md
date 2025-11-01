@@ -138,8 +138,7 @@ Test Scope:
 1. Clone and change to the directory:
 
 ```
-git clone https://github.com/kolosochok/django-ecommerce
-cd django-ecommerce
+git clone https://github.com/HugoExp1311/django_KTPM_25-26
 ```
 
 2. Create and activate a virtual environment:
