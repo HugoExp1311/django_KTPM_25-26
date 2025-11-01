@@ -61,4 +61,7 @@ urlpatterns = [
 
 	# About Us
 	path('about/', views.about, name='about'),
+    
+	# Checkout Page newly added
+	path('checkout/', views.checkout, name='checkout'),
 ]
