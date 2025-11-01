@@ -1,25 +1,17 @@
-# syntax=docker/dockerfile:1
-
+# Dùng image Python chính thức
 FROM python:3.9-slim
 
-# Environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
+# Thiết lập thư mục làm việc
 WORKDIR /app
 
-# Copy requirements first
-COPY requirements.txt .
+# Copy toàn bộ project vào container
+COPY . /app
 
-# Install dependencies
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+# Cài đặt các dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy source code
-COPY . .
-
-# Expose port
+# Expose port Django
 EXPOSE 8000
 
-# Run the application
+# Chạy server khi container khởi động
 CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
