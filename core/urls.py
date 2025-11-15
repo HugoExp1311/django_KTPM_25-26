@@ -64,4 +64,8 @@ urlpatterns = [
     
 	# Checkout Page newly added
 	path('checkout/', views.checkout, name='checkout'),
+    
+	# Order History
+    path('order-history/', views.order_history, name='order-history'),
+    path('order-detail/<str:order_id>/', views.order_detail, name='order-detail'),
 ]

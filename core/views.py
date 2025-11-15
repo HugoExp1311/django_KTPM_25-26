@@ -381,3 +381,38 @@ def checkout(request):
         'cart_data': request.session.get('cart_data_object', {})
     }
     return render(request, 'core/checkout.html', context)
+
+
+
+
+# core/views.py - viewing user orders
+
+# core/views.py
+@login_required
+def order_history(request):
+    # Lấy tất cả orders của user hiện tại, sắp xếp theo thời gian mới nhất
+    orders = CartOrder.objects.filter(user=request.user, paid_status=True).order_by('-order_date')
+    
+    context = {
+        'orders': orders
+    }
+    return render(request, 'core/order_history.html', context)  # Đổi thành order_history.html
+
+@login_required
+def order_detail(request, order_id):
+    try:
+        # Chỉ cho phép user xem order của chính họ
+        order = CartOrder.objects.get(id=order_id, user=request.user, paid_status=True)
+        order_items = CartOrderItems.objects.filter(order=order)
+        
+        # Tính tổng tiền từ các items
+        total_amount = sum([item.total for item in order_items])
+        
+        context = {
+            'order': order,
+            'order_items': order_items,
+            'total_amount': total_amount
+        }
+        return render(request, 'core/order_detail.html', context)  # Cũng đổi thành order_detail.html
+    except CartOrder.DoesNotExist:
+        return render(request, 'core/404.html')
