@@ -345,7 +345,12 @@ def ajax_contact_form(request):
 
 def about(request):
 	return render(request, 'core/about.html')
+
+
  # Add new payment function
+import shortuuid
+from django.contrib import messages
+
 def checkout(request):
     cart_total_amount = 0
     cart_items = []
@@ -364,7 +369,8 @@ def checkout(request):
                     'quantity': quantity,
                     'total_price': total_price,
                     'title': item['title'],
-                    'image': item['image']
+                    'image': item['image'],
+                    'product_id': product_id
                 })
                 cart_total_amount += total_price
             except Product.DoesNotExist:
@@ -372,6 +378,48 @@ def checkout(request):
     
     shipping_fee = 30000  # Phí vận chuyển
     total_with_shipping = cart_total_amount + shipping_fee
+    
+    # XỬ LÝ KHI SUBMIT FORM CHECKOUT - THÊM PHẦN NÀY
+    if request.method == 'POST' and request.user.is_authenticated:
+        # Lấy thông tin từ form
+        full_name = request.POST.get('full_name')
+        email = request.POST.get('email')
+        address = request.POST.get('address')
+        phone = request.POST.get('phone')
+        payment_method = request.POST.get('payment_method')
+        
+        # Kiểm tra giỏ hàng có sản phẩm không
+        if not cart_items:
+            messages.error(request, "Giỏ hàng của bạn đang trống!")
+            return redirect('core:cart')
+        
+        # Tạo order mới
+        order = CartOrder.objects.create(
+            user=request.user,
+            price=total_with_shipping,
+            paid_status=True,  # Giả sử thanh toán thành công
+            product_status='process'  # Trạng thái xử lý
+        )
+        
+        # Lưu các order items
+        for item in cart_items:
+            CartOrderItems.objects.create(
+                order=order,
+                invoice_no=f"INV-{shortuuid.uuid()[:8].upper()}",
+                product_status='process',
+                item=item['title'],
+                image=item['image'],
+                qty=item['quantity'],
+                price=item['product'].price,
+                total=item['total_price']
+            )
+        
+        # Xóa giỏ hàng sau khi đặt hàng thành công
+        if 'cart_data_object' in request.session:
+            del request.session['cart_data_object']
+        
+        messages.success(request, f"Đặt hàng thành công! Mã đơn hàng: #{order.id}")
+        return redirect('core:order-history')
     
     context = {
         'cart_items': cart_items,
@@ -382,16 +430,13 @@ def checkout(request):
     }
     return render(request, 'core/checkout.html', context)
 
-
-
-
 # core/views.py - viewing user orders
 
 # core/views.py
 @login_required
 def order_history(request):
     # Lấy tất cả orders của user hiện tại, sắp xếp theo thời gian mới nhất
-    orders = CartOrder.objects.filter(user=request.user, paid_status=True).order_by('-order_date')
+    orders = CartOrder.objects.filter(user=request.user, paid_status=True).order_by('-id')
     
     context = {
         'orders': orders

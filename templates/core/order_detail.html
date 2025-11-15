@@ -1,4 +1,4 @@
-{% extends 'core/base.html' %}
+{% extends 'partials/base.html' %}
 {% load static %}
 
 {% block content %}
@@ -7,15 +7,15 @@
 <section class="breadcrumb-section set-bg" data-setbg="{% static 'core/img/breadcrumb.jpg' %}">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="breadcrumb__text">
-                    <h2>Chi tiết đơn hàng #{{ order.id }}</h2>
-                    <div class="breadcrumb__option">
-                        <a href="{% url 'core:index' %}">Trang chủ</a>
-                        <a href="{% url 'core:order-history' %}">Lịch sử đơn hàng</a>
-                        <span>Chi tiết đơn hàng</span>
-                    </div>
-                </div>
+           <div class="col-lg-12 text-center">
+    <div class="breadcrumb__text" style="color: #000 !important;">
+        <h2 style="color: #000 !important;">Chi tiết đơn hàng #{{ order.id }}</h2>
+        <div class="breadcrumb__option" style="color: #000 !important;">
+            <a href="{% url 'core:order-history' %}" style="color: #000 !important;">Lịch sử đơn hàng</a>
+        </div>
+    </div>
+</div>
+
             </div>
         </div>
     </div>

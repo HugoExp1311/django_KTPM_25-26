@@ -138,7 +138,7 @@ class CartOrder(models.Model):
 	price = models.DecimalField(max_digits=999999999999, decimal_places=2, default="1.99")
 	paid_status = models.BooleanField(default=False)
 	order_date = models.DateTimeField(auto_now_add=True)
-	product_status = models.CharField(choices=STATUS_CHOICE, max_length=30, default="processing")
+	product_status = models.CharField(choices=STATUS_CHOICE, max_length=30, default="process")  # Sửa: processing -> process
 
 	class Meta:
 		verbose_name_plural = 'Cart Order'

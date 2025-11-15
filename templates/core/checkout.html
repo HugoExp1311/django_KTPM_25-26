@@ -110,7 +110,7 @@
                     </div>
                 </div>
 
-                <button type="button" class="complete-order-btn" onclick="completeOrders()">
+                <button type="submit" class="complete-order-btn" >
                     Place Complete Order
                 </button>
             </form>
@@ -393,7 +393,7 @@ body {
     alert("🛒 Mua hàng thành công! Cảm ơn bạn đã đặt hàng tại Valley ❤️");
 
     // Tùy chọn: có thể redirect sau khi thông báo
-    window.location.href = "/"; // hoặc URL khác, ví dụ: "/orders/"
+    window.location.href = "/order-history/"; // hoặc URL khác, ví dụ: "/orders/"
 }
 let selectedPaymentMethod = 'cod';
 
