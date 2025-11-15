@@ -1,0 +1,105 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="{% static 'core/img/breadcrumb.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Chi tiết đơn hàng #{{ order.id }}</h2>
+                    <div class="breadcrumb__option">
+                        <a href="{% url 'core:index' %}">Trang chủ</a>
+                        <a href="{% url 'core:order-history' %}">Lịch sử đơn hàng</a>
+                        <span>Chi tiết đơn hàng</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Order Detail Section Begin -->
+<section class="checkout spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Thông tin đơn hàng</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <p><strong>Mã đơn hàng:</strong> #{{ order.id }}</p>
+                                <p><strong>Ngày đặt:</strong> {{ order.order_date|date:"d/m/Y H:i" }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Trạng thái:</strong> 
+                                    <span class="badge 
+                                        {% if order.product_status == 'delivered' %}bg-success
+                                        {% elif order.product_status == 'shipped' %}bg-info
+                                        {% else %}bg-warning{% endif %}">
+                                        {{ order.get_product_status_display }}
+                                    </span>
+                                </p>
+                                <p><strong>Tổng tiền:</strong> {{ order.price|floatformat:0 }} VNĐ</p>
+                            </div>
+                        </div>
+
+                        <h6 class="border-bottom pb-2">Sản phẩm</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Sản phẩm</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in order_items %}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="/media/{{ item.image }}" alt="{{ item.item }}" 
+                                                     style="width: 60px; height: 60px; object-fit: cover;" class="me-3">
+                                                <div>
+                                                    <strong>{{ item.item }}</strong>
+                                                    <br>
+                                                    <small class="text-muted">SKU: {{ item.invoice_no }}</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{{ item.price|floatformat:0 }} VNĐ</td>
+                                        <td>{{ item.qty }}</td>
+                                        <td>{{ item.total|floatformat:0 }} VNĐ</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" class="text-end"><strong>Tổng cộng:</strong></td>
+                                        <td><strong>{{ total_amount|floatformat:0 }} VNĐ</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'core:order-history' %}" class="btn btn-secondary">
+                            <i class="fa fa-arrow-left"></i> Quay lại lịch sử
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Order Detail Section End -->
+
+{% endblock %}
