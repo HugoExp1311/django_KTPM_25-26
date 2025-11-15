@@ -110,7 +110,7 @@
                     </div>
                 </div>
 
-                <button type="button" class="complete-order-btn" onclick="completeOrder()">
+                <button type="button" class="complete-order-btn" onclick="completeOrders()">
                     Place Complete Order
                 </button>
             </form>
@@ -385,7 +385,16 @@ body {
 }
 </style>
 
+
+
+
 <script>
+    function completeOrders() {
+    alert("🛒 Mua hàng thành công! Cảm ơn bạn đã đặt hàng tại Valley ❤️");
+
+    // Tùy chọn: có thể redirect sau khi thông báo
+    window.location.href = "/"; // hoặc URL khác, ví dụ: "/orders/"
+}
 let selectedPaymentMethod = 'cod';
 
 function selectPaymentMethod(method) {
