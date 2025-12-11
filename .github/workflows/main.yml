@@ -44,28 +44,26 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
+      # 5. Setup Database
+      - name: Remove old DB
+        run: rm -f db.sqlite3
 
       # 6. Run Django migrations
       - name: Run Django migrations
-        env:
-          DJANGO_SECRET_KEY: testkey123
         run: |
           python manage.py migrate
 
       # 7. Run Django Tests
       - name: Run Test Suite
-        env:
-          DJANGO_SECRET_KEY: testkey123
         run: |
           python manage.py test
 
-      # 8. Build Docker image
-      - name: Build Docker Image
-        run: |
-          docker build -t django-app .
+      # # 8. Build Docker image
+      # - name: Build Docker Image
+      #   run: |
+      #     docker build -t django-app .
 
-      # 9. Deploy (chỉ chạy khi push vào main)
-      - name: Deploy to Production
-        if: github.ref == 'refs/heads/main'
-        run: echo "Bật deploy sau (tùy server)."
+      # # 9. Deploy (chỉ chạy khi push vào main)
+      # - name: Deploy to Production
+      #   if: github.ref == 'refs/heads/main'
+      #   run: echo "Bật deploy sau (tùy server)."
