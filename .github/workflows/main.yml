@@ -10,6 +10,9 @@ jobs:
   ci-cd:
     runs-on: ubuntu-latest
 
+    env:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+
     services:
       sqlite:
         image: nouchka/sqlite3
