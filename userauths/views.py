@@ -102,7 +102,8 @@ def account(request):
 		account.save()
 
 		messages.success(request, 'Account updated successfully.')
-
-		return redirect('userauths:account')	
-
+		return redirect('userauths:account')
 	return render(request, 'userauths/account.html')
+
+		
+
