@@ -1,0 +1,101 @@
+name: Django CD
+
+on:
+  workflow_run:
+    workflows: ["Django CI"]
+    branches: [main]
+    types:
+      - completed
+
+env:
+  DEPLOYMENT_ENV: 'production'
+
+jobs:
+  check-ci-result:
+    runs-on: ubuntu-latest
+    outputs:
+      ci-success: ${{ steps.check.outputs.ci-success }}
+    
+    steps:
+      - name: Check CI workflow result
+        id: check
+        run: |
+          if [[ "${{ github.event.workflow_run.conclusion }}" == "success" ]]; then
+            echo "ci-success=true" >> $GITHUB_OUTPUT
+          else
+            echo "ci-success=false" >> $GITHUB_OUTPUT
+          fi
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: check-ci-result
+    if: needs.check-ci-result.outputs.ci-success == 'true'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Deploy to Vercel (Python)
+      uses: amondnet/vercel-action@v25
+      if: ${{ env.DEPLOYMENT_ENV == 'production' }}
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        vercel-args: '--prod'
+    
+    - name: Deploy to PythonAnywhere
+      if: ${{ env.DEPLOYMENT_ENV == 'production' }}
+      env:
+        PA_API_TOKEN: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
+        PA_USERNAME: ${{ secrets.PYTHONANYWHERE_USERNAME }}
+      run: |
+        # Tạo file zip để deploy
+        zip -r deploy.zip . -x "*.git*" "*.sqlite3" "*.pyc" "__pycache__/*" "venv/*"
+        
+        # Upload lên PythonAnywhere
+        curl -X POST \
+          -H "Authorization: Token $PA_API_TOKEN" \
+          -F "default_webapp=https://$PA_USERNAME.pythonanywhere.com/" \
+          -F "archive=@deploy.zip" \
+          https://www.pythonanywhere.com/api/v0/user/$PA_USERNAME/webapps/
+    
+    - name: Deploy to Railway
+      if: ${{ env.DEPLOYMENT_ENV == 'production' }}
+      uses: railway/action@v1.0.0
+      with:
+        service: my-django-app
+        token: ${{ secrets.RAILWAY_TOKEN }}
+    
+    - name: Deploy to Heroku
+      if: ${{ env.DEPLOYMENT_ENV == 'production' }}
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+      run: |
+        git remote add heroku https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git
+        git push heroku main
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: always()
+    
+    steps:
+    - name: Send Slack notification
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        channel: '#deployments'
+        username: 'Deploy Bot'
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    
+    - name: Send Discord notification
+      uses: sarisia/actions-status-discord@v1
+      if: always()
+      with:
+        webhook: ${{ secrets.DISCORD_WEBHOOK }}
+        title: "Deployment ${{ job.status }}"
+        description: "Django app deployment to ${{ env.DEPLOYMENT_ENV }}"
+        color: ${{ job.status == 'success' && '0x00ff00' || '0xff0000' }}
