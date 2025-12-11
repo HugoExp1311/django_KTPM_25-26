@@ -1,0 +1,75 @@
+name: 02 - Unit & Integration Tests
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+  push:
+    branches: [ main, develop ]
+
+env:
+  DJANGO_SETTINGS_MODULE: ecommerce.settings.test
+  SECRET_KEY: test-secret-key-${{ github.run_id }}
+  DEBUG: 'True'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10']
+        django-version: ['4.2', '5.0']
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install Django==${{ matrix.django-version }}
+        pip install -r requirements/dev.txt
+    
+    - name: Create test database
+      run: |
+        python manage.py makemigrations --check
+        python manage.py migrate
+    
+    - name: Run unit tests
+      env:
+        DATABASE_URL: 'sqlite://:memory:'
+      run: |
+        python manage.py test products.tests.unit \
+          cart.tests.unit \
+          accounts.tests.unit \
+          --verbosity=2
+    
+    - name: Run integration tests
+      run: |
+        python manage.py test products.tests.integration \
+          cart.tests.integration \
+          orders.tests.integration \
+          --verbosity=2
+    
+    - name: Generate coverage report
+      run: |
+        coverage run --source='.' manage.py test --pattern="*test*.py"
+        coverage report
+        coverage xml
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        fail_ci_if_error: false
+    
+    - name: Test database migrations
+      run: |
+        python manage.py makemigrations --check --dry-run
+        python manage.py migrate --fake-initial --check
