@@ -45,7 +45,7 @@ class LoginTestCase(TestCase):
     #     self.assertRedirects(response, reverse('core:index'))
 def test_login_with_valid_credentials(self):
     response = self.client.post(
-        reverse("userauths:login"),
+        reverse("userauths:sing-in"),
         {
             "email": "test@example.com",
             "password": "pass1234"
