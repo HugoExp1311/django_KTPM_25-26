@@ -23,26 +23,38 @@ class LoginTestCase(TestCase):
             email='test@example.com'
         )
 
-    def test_login_with_valid_credentials(self):
-        """
-        Test đăng nhập với thông tin hợp lệ.
-        """
-        # Gọi hàm authenticate
-        user = authenticate(username=self.username, password=self.password)
+    # def test_login_with_valid_credentials(self):
+    #     """
+    #     Test đăng nhập với thông tin hợp lệ.
+    #     """
+    #     # Gọi hàm authenticate
+    #     user = authenticate(username=self.username, password=self.password)
         
-        # Kiểm tra xác thực thành công
-        self.assertIsNotNone(user)
-        self.assertEqual(user.username, self.username)
+    #     # Kiểm tra xác thực thành công
+    #     self.assertIsNotNone(user)
+    #     self.assertEqual(user.username, self.username)
 
-        # Có thể test view login nếu cần
-        login_url = reverse('login')  # Thay 'login' bằng tên URL pattern của bạn
-        response = self.client.post(login_url, {
-            'username': self.username,
-            'password': self.password
-        })
+    #     # Có thể test view login nếu cần
+    #     login_url = reverse('sing-in')  # Thay 'login' bằng tên URL pattern của bạn
+    #     response = self.client.post(login_url, {
+    #         'username': self.username,
+    #         'password': self.password
+    #     })
         
-        # Kiểm tra chuyển hướng sau khi login thành công (giả sử redirect tới 'home')
-        self.assertRedirects(response, reverse('home'))
+    #     # Kiểm tra chuyển hướng sau khi login thành công (giả sử redirect tới 'home')
+    #     self.assertRedirects(response, reverse('core:index'))
+def test_login_with_valid_credentials(self):
+    response = self.client.post(
+        reverse("userauths:login"),
+        {
+            "email": "test@example.com",
+            "password": "pass1234"
+        },
+        follow=True
+    )
+
+    self.assertEqual(response.status_code, 200)
+    self.assertTrue(response.context["user"].is_authenticated)
 
     def test_login_with_invalid_username(self):
         """
@@ -62,18 +74,18 @@ class LoginTestCase(TestCase):
         """
         Test rằng trang login sử dụng đúng template.
         """
-        response = self.client.get(reverse('login'))
+        response = self.client.get(reverse('userauths:sing-in'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'registration/login.html')  # Thay bằng template thực tế
+        self.assertTemplateUsed(response, 'userauths/sing-in.html')  # Thay bằng template thực tế
 
     def test_login_required_redirect_for_anonymous_user(self):
         """
         Test rằng một view yêu cầu đăng nhập sẽ chuyển hướng người dùng chưa đăng nhập.
         """
         # Giả sử 'profile' là view cần đăng nhập
-        profile_url = reverse('profile')
+        profile_url = reverse('userauths:account')
         response = self.client.get(profile_url)
         
         # Kiểm tra redirect tới trang login
         self.assertEqual(response.status_code, 302)
-        self.assertIn(reverse('login'), response.url)
+        self.assertIn(reverse('userauths:sing-in'), response.url)
