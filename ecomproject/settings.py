@@ -167,6 +167,7 @@ JAZZMIN_SETTINGS = {
     ],
 }
 
+
 LOGIN_URL = 'userauths:sing-in'
 
 AUTH_USER_MODEL = 'userauths.User'
@@ -185,3 +186,7 @@ CKEDITOR_CONFIGS = {
         # ),
     }
 }
+AUTHENTICATION_BACKENDS = [
+    'userauths.backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]

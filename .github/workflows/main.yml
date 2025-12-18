@@ -58,6 +58,17 @@ jobs:
         run: |
           python manage.py test
 
+      # 8. Run coverage test
+      - name: Run coverage test
+        run: |
+          coverage run manage.py test
+      
+      # 9. Coverage report
+      - name: Ccoverage report
+        run: |
+          coverage report
+          
+      # Alternative
       # # 8. Build Docker image
       # - name: Build Docker Image
       #   run: |
