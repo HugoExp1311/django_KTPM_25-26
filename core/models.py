@@ -108,14 +108,15 @@ class Product(models.Model):
 
 	class Meta:
 		verbose_name_plural = 'Products'
-
 	def product_image(self):
 		return mark_safe('<img src="%s" width="50" height="50">' % (self.image.url))
 
 	def __str__(self):
 		return self.title
-
 	def get_percentage(self):
+        # Tránh lỗi chia cho 0 nếu giá cũ bằng 0
+		if self.old_price == 0:
+			return 0 
 		new_price = ((self.old_price - self.price) / self.old_price) * 100
 		return new_price
 

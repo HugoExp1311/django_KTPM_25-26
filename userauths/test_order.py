@@ -1,4 +1,4 @@
-from xml.dom.minidom import Comment
+#from xml.dom.minidom import Comment
 from django.test import TestCase
 from django.urls import reverse
 from userauths.models import User
