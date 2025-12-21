@@ -3,8 +3,10 @@ from django.urls import reverse
 from django.contrib.auth import authenticate
 from userauths.models import User
 from django.contrib.messages import get_messages
+import pytest
 
-
+@pytest.mark.smoke  
+@pytest.mark.regression
 class AuthTestCase(TestCase):
     """
     Test toàn bộ chức năng:

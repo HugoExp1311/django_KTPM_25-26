@@ -1,0 +1,358 @@
+Run started:2025-12-20 04:16:36.931239
+
+Test results:
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: '123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b106_hardcoded_password_funcarg.html
+   Location: .\core\test_views.py:8:20
+7	    def setup_method(self):
+8	        self.user = User.objects.create_user(username='viewtest', password='123')
+9	        self.category = Category.objects.create(title="View Cat", cid="viewcat")
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b101_assert_used.html
+   Location: .\core\test_views.py:22:8
+21	        response = client.get(url)
+22	        assert response.status_code == 200
+23	        assert "View Prod" in str(response.content)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b101_assert_used.html
+   Location: .\core\test_views.py:23:8
+22	        assert response.status_code == 200
+23	        assert "View Prod" in str(response.content)
+24	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b101_assert_used.html
+   Location: .\core\test_views.py:29:8
+28	        response = client.get(url)
+29	        assert response.status_code == 200
+30	        assert "View Cat" in str(response.content)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b101_assert_used.html
+   Location: .\core\test_views.py:30:8
+29	        assert response.status_code == 200
+30	        assert "View Cat" in str(response.content)
+31	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b101_assert_used.html
+   Location: .\core\test_views.py:36:8
+35	        response = client.get(url, {'q': 'View Prod'})
+36	        assert response.status_code == 200
+37	        assert "View Prod" in str(response.content)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b101_assert_used.html
+   Location: .\core\test_views.py:37:8
+36	        assert response.status_code == 200
+37	        assert "View Prod" in str(response.content)
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: '123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b106_hardcoded_password_funcarg.html
+   Location: .\core\tests.py:18:20
+17	        # Tạo User chung cho các test case
+18	        self.user = User.objects.create_user(username='test_user', email='test@gmail.com', password='123')
+19	        
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: '123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b106_hardcoded_password_funcarg.html
+   Location: .\core\tests.py:42:20
+41	    def setUp(self):
+42	        self.user = User.objects.create_user(username='rel_user', password='123')
+43	        self.category = Category.objects.create(title="Laptop")
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: '123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b106_hardcoded_password_funcarg.html
+   Location: .\core\tests.py:97:20
+96	    def setUp(self):
+97	        self.user = User.objects.create_user(username='logic_user', password='123')
+98	        self.category = Category.objects.create(title="Test Cat")
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: '123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b106_hardcoded_password_funcarg.html
+   Location: .\core\tests.py:129:20
+128	    def setUp(self):
+129	        self.user = User.objects.create_user(username='edge_user', password='123')
+130	
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: '123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b106_hardcoded_password_funcarg.html
+   Location: .\core\tests.py:156:20
+155	        User = get_user_model()
+156	        self.user = User.objects.create_user(username='test_unit', password='123')
+157	        self.category = Category.objects.create(cid='cat01', title='Rau')
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: '123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b105_hardcoded_password_string.html
+   Location: .\init_data.py:17:15
+16	    email = "test@gmail.com"
+17	    password = "123"
+18	    
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'devilthomas123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b105_hardcoded_password_string.html
+   Location: .\selenium_full_flow.py:13:12
+12	USER_EMAIL = "test@gmail.com"  # Đảm bảo user này đã tồn tại
+13	USER_PASS = "devilthomas123"
+14	
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'Pass12345'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b106_hardcoded_password_funcarg.html
+   Location: .\userauths\test_order.py:19:20
+18	    def setUp(self):
+19	        self.user = User.objects.create_user(
+20	            username="buyer",
+21	            email="buyer@example.com",
+22	            password="Pass12345"
+23	        )
+24	
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'Pass12345'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b106_hardcoded_password_funcarg.html
+   Location: .\userauths\test_order.py:44:8
+43	        print("🟢 [Integration] Đang test trang order cho user đã đăng nhập...")
+44	        self.client.login(
+45	            email="buyer@example.com",
+46	            password="Pass12345"
+47	        )
+48	        response = self.client.get(reverse("core:checkout"))
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: '123456'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b106_hardcoded_password_funcarg.html
+   Location: .\userauths\test_order.py:185:15
+184	        print("🟢 [Integration Test] Thanh toán hàng từ giỏ hàng (checkout)...")
+185	        user = User.objects.create_user(
+186	            username="testuser",
+187	            email="test@test.com",
+188	            password="123456"
+189	        )
+190	        self.client.login(email="test@test.com", password="123456")
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: '123456'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b106_hardcoded_password_funcarg.html
+   Location: .\userauths\test_order.py:190:8
+189	        )
+190	        self.client.login(email="test@test.com", password="123456")
+191	
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'password123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b106_hardcoded_password_funcarg.html
+   Location: .\userauths\test_order.py:262:15
+261	        # Tạo user với password rõ ràng
+262	        user = User.objects.create_user(username="commenter", email="comment@test.com", password="password123")
+263	        self.client.login(email="comment@test.com", password="password123")
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'password123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b106_hardcoded_password_funcarg.html
+   Location: .\userauths\test_order.py:263:8
+262	        user = User.objects.create_user(username="commenter", email="comment@test.com", password="password123")
+263	        self.client.login(email="comment@test.com", password="password123")
+264	        
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'Pass12345'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b105_hardcoded_password_string.html
+   Location: .\userauths\test_signup.py:20:24
+19	        self.email = "test@example.com"
+20	        self.password = "Pass12345"
+21	
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'WrongPassword'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b106_hardcoded_password_funcarg.html
+   Location: .\userauths\test_signup.py:118:15
+117	        print("🟢 [Integration] Đang test đăng nhập với password sai...")
+118	        user = authenticate(
+119	            email=self.email,
+120	            password="WrongPassword"
+121	        )
+122	        self.assertIsNone(user)
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'pass1234'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b106_hardcoded_password_funcarg.html
+   Location: .\userauths\test_signup.py:182:8
+181	    def test_account_username_duplicate(self):
+182	        User.objects.create_user(
+183	            email="other@example.com",
+184	            username="duplicate",
+185	            password="pass1234"
+186	        )
+187	
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: '123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b106_hardcoded_password_funcarg.html
+   Location: .\userauths\test_views.py:11:20
+10	        self.client = Client()
+11	        self.user = User.objects.create_user(username='viewtest', password='123')
+12	        self.category = Category.objects.create(title="Electronics", cid="elec01")
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b101_assert_used.html
+   Location: .\userauths\test_views.py:37:8
+36	        response = self.client.get(url)
+37	        assert response.status_code == 200
+38	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b101_assert_used.html
+   Location: .\userauths\test_views.py:45:12
+44	            response = self.client.get(url)
+45	            assert response.status_code == 200
+46	            assert "Smartphone" in str(response.content)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b101_assert_used.html
+   Location: .\userauths\test_views.py:46:12
+45	            assert response.status_code == 200
+46	            assert "Smartphone" in str(response.content)
+47	        except Exception as e:
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b101_assert_used.html
+   Location: .\userauths\test_views.py:55:12
+54	            response = self.client.get(url)
+55	            assert response.status_code == 200
+56	            assert "Electronics" in str(response.content)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b101_assert_used.html
+   Location: .\userauths\test_views.py:56:12
+55	            assert response.status_code == 200
+56	            assert "Electronics" in str(response.content)
+57	        except Exception as e:
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b101_assert_used.html
+   Location: .\userauths\test_views.py:65:12
+64	            response = self.client.get(url, {'q': 'Smartphone'})
+65	            assert response.status_code == 200
+66	            assert "Smartphone" in str(response.content)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b101_assert_used.html
+   Location: .\userauths\test_views.py:66:12
+65	            assert response.status_code == 200
+66	            assert "Smartphone" in str(response.content)
+67	        except:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.10/plugins/b110_try_except_pass.html
+   Location: .\userauths\test_views.py:67:8
+66	            assert "Smartphone" in str(response.content)
+67	        except:
+68	            pass # Bỏ qua nếu chưa có URL search
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 3059
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 32
+		Medium: 0
+		High: 0
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 0
+		Medium: 18
+		High: 14
+Files skipped (0):

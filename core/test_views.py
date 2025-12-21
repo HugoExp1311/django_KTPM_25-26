@@ -2,6 +2,7 @@ import pytest
 from django.urls import reverse
 from core.models import Category, Product, User
 
+@pytest.mark.smoke
 @pytest.mark.django_db
 class TestCoreViews:
     def setup_method(self):

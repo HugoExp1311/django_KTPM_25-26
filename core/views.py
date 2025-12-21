@@ -351,6 +351,7 @@ def about(request):
 import shortuuid
 from django.contrib import messages
 
+@login_required(login_url='userauths:sing-in') # <--- Thêm login_url để chắc chắn chuyển đúng trang
 def checkout(request):
     cart_total_amount = 0
     cart_items = []

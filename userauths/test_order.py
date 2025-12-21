@@ -37,7 +37,7 @@ class PurchaseFlowTestCase(TestCase):
         """
         print("🟢 [Integration] Đang test trang checkout requires login...")
         response = self.client.get(reverse("core:checkout"))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
     def test_checkout_logged_in_user(self):
         print("🟢 [Integration] Đang test trang order cho user đã đăng nhập...")
