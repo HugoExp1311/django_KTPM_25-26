@@ -27,3 +27,20 @@ class WebsiteUser(HttpUser):
     def view_cart(self):
         """Giả lập vào giỏ hàng"""
         self.client.get("/cart/")
+
+    @task(3)
+    def view_homepage(self):
+        """Mô phỏng xem trang chủ (tần suất cao)"""
+        self.client.get("/")
+
+    @task(2)
+    def view_shop(self):
+        """Mô phỏng xem trang shop"""
+        # Sửa đường dẫn '/shop/' thành đường dẫn thật của bạn nếu khác
+        self.client.get("/products/") 
+
+    @task(1)
+    def view_product_detail(self):
+        """Mô phỏng xem chi tiết 1 sản phẩm cụ thể (cần pid thật)"""
+        # Thay 'post12345' bằng 1 pid có thật trong DB của bạn để test chuẩn
+        self.client.get("/product/42fd2f1fcb/", name="/product/[pid]")
